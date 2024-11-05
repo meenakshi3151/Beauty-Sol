@@ -2,10 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
 function OrgLogin(){
 	const [email,setEmail]=useState("");
 	const navigate=useNavigate();
-	const [password,setPassword]=useState("");
+	const { login } = useAuth();
+		const [password,setPassword]=useState("");
     const handleOrgLoginClick = async(e) => {
 		e.preventDefault();
 		if (email === "" || password === "") {
@@ -18,10 +20,13 @@ function OrgLogin(){
 				password
 			});
 			console.log(response.data)
-			console.log(response.data[0])
 			alert("Logged in successfully");
-			localStorage.setItem("orginfodetails",JSON.stringify(response.data[0]));
-			navigate('/dashboarda');
+			if (response && response.data) {
+				console.log(response.data[0])
+				login(); 
+				localStorage.setItem("orginfodetails", JSON.stringify(response.data[0]));
+				navigate('/dashboarda');
+			}
 		}
 		catch (error) {
 			alert(error.response.data);

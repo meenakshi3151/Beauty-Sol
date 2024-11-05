@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 function UserLogin(){
 	const [email,setEmail]=useState("");
+	const { login } = useAuth();
 	const navigate=useNavigate();
 	const [password,setPassword]=useState("");
     const handleUserLoginClick = async(e) => {
@@ -18,6 +20,7 @@ function UserLogin(){
 				password
 			});
 			console.log(response.data[0])
+			login()
 			alert("Logged in successfully");
 			localStorage.setItem("userinfoDetails",JSON.stringify(response.data[0]));
 			navigate('/dashboardu');

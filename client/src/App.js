@@ -8,6 +8,7 @@ import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import YourBookings from './pages/YourBookings';
 import AddService from './components/AddService';
+import PrivateRoute from './components/PrivateRoute';
 import YourService from './components/YourService';
 function App() {
   return (
@@ -15,12 +16,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/usersignup" element={<UserSignUp/>}/>
         <Route path="/orgsignup" element={<OrgSignUp/>}/>
-        <Route path="/service" element={<DisplayServices/>}/>
-        <Route path="/dashboardu" element={<UserDashboard/>}/>
-        <Route path="/yourbookings" element={<YourBookings/>}/>
-        <Route path="/dashboarda" element={<AdminDashboard/>}/>
-        <Route path="/addservice" element={<AddService />} />
-        <Route path="/yourservice" element={<YourService />} />
+        <Route path="/service" element={<PrivateRoute Component={YourBookings}/>}/>
+        <Route path="/dashboardu" element={<PrivateRoute Component={UserDashboard} />}/>
+        <Route path="/yourbookings" element={<PrivateRoute Component={YourBookings}/>}/>
+        <Route path="/dashboarda" element={<PrivateRoute Component={AdminDashboard}/>}/>
+        <Route path="/addservice" element={<PrivateRoute Component={AddService}/>} />
+        <Route path="/yourservice" element={<PrivateRoute Component={YourService}/>} />
       </Routes>
   );
 }
