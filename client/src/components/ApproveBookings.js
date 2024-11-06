@@ -16,9 +16,22 @@ function ApproveBookings() {
             console.error('There was an error fetching the bookings!', error);
         });
     }, );
+    const handleCompletedBooking = (booking_id) => {
+        axios.post('http://localhost:8081/api/bookings/bookingBeauty', {
+            booking_id: booking_id,
+            status:"Confirmed"
+        })
+        .then((response) => {
+            console.log(response);
+            alert('Booking completed successfully!');
+        })
+        .catch((error) => {
+            console.error('There was an error cancelling the booking!', error);
+        });
+    }
 
     const handleApproveBooking = (booking_id) => {
-        axios.post('http://localhost:8081/api/bookings/BookingBeauty', {
+        axios.post('http://localhost:8081/api/bookings/bookingBeauty', {
             booking_id: booking_id,
             status:"Confirmed"
         })
@@ -54,6 +67,7 @@ function ApproveBookings() {
                         <tr>
                             <th className="py-2 px-4 border-b">Service Type</th>
                             <th className="py-2 px-4 border-b">User Email</th>
+                            <th className="py-2 px-4 border-b">Status</th>
                             <th className="py-2 px-4 border-b">Total Price</th>
 
 
@@ -63,28 +77,36 @@ function ApproveBookings() {
                     <tbody>
                         {bookings.map((booking) => (
                             <tr key={booking.booking_id}>
-                                {booking.status === 'Pending' || booking.status==='Confirmed' && (
-                                <td className="py-2 px-4 border-b">{booking.service_type}</td>)}
-                                  {booking.status === 'Pending'  || booking.status==='Confirmed' && (
-                                <td className="py-2 px-4 border-b">{booking.user_email}</td>)}
-                                  {booking.status === 'Pending'   || booking.status==='Confirmed' && (
-                                <td className="py-2 px-4 border-b">${booking.total_price}</td>)}
+                              
+                                <td className="py-2 px-4 border-b">{booking.service_type}</td>
+                                
+                                <td className="py-2 px-4 border-b">{booking.user_email}</td>
+                                <td className="py-2 px-4 border-b">{booking.status}</td>
+                                 
+                                <td className="py-2 px-4 border-b">${booking.total_price}</td>
                                 <td className="py-2 px-4 border-b">
                                     
-                                    {booking.status === 'Pending' && (
+                                  {booking.status === 'Pending' && (
                                     <button 
                                         className="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 rounded-lg px-3 py-1 text-sm"
                                         onClick={() => handleCancelBookingByParlour(booking.booking_id)}
                                     >
                                         Cancel Booking
                                     </button>
-                                    )}
-                                    {booking.status === 'Pending' && (
+                                  )}
+                                   {booking.status === 'Pending' && (
                                     <button 
                                         className="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 rounded-lg px-3 py-1 text-sm"
                                         onClick={() => handleApproveBooking(booking.booking_id)}
                                         >Approove Booking</button>)}
-                                        
+                                      {
+                                        booking.status==='Confirmed' && (
+                                            <button 
+                                            className="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 rounded-lg px-3 py-1 text-sm"
+                                            onClick={() => handleCompletedBooking(booking.booking_id)}
+                                            >Completed Booking</button>
+                                        )
+                                      }
 
                                 </td>
                             </tr>

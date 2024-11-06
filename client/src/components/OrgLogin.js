@@ -24,6 +24,7 @@ function OrgLogin(){
 			if (response && response.data) {
 				console.log(response.data[0])
 				login(); 
+				
 				localStorage.setItem("orginfodetails", JSON.stringify(response.data[0]));
 				navigate('/dashboarda');
 			}

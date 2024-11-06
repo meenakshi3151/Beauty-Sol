@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 function ServiceCard({ id,service_name,showOnAdmin, in_home, on_spot, price_inhome, price, description}) {
   const currUser = JSON.parse(localStorage.getItem("userinfoDetails"));
+  console.log(currUser);
   const handleInHomeBookingClick = async (e) => {
     e.preventDefault();
 
@@ -26,8 +27,8 @@ function ServiceCard({ id,service_name,showOnAdmin, in_home, on_spot, price_inho
     
     try {
       const response = await axios.post('http://localhost:8081/api/bookings/bookingUser', {
-        service_name: service_name,
-        email:currUser.email,
+        service_id: id,
+        user_email:currUser.email,
         service_type: "On_spot",
         total_price: price
       });

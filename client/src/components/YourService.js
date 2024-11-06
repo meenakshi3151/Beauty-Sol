@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from 'axios';
 import ServiceCard from "./ServiceCard";
 import { useState } from "react";
-
+import NavbarAdmin from "./NavbarAdmin";
 function YourService() {
     const orgUser = JSON.parse(localStorage.getItem("orginfodetails"));
     const [services, setServices] = useState([]);
@@ -21,7 +21,7 @@ function YourService() {
 
     return (
         <div>
-            <h1>Your Service</h1>
+            <NavbarAdmin />
             {services ? (
                 services.map((service) => (
                     <ServiceCard

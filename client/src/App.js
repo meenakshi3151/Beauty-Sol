@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/usersignup" element={<UserSignUp/>}/>
         <Route path="/orgsignup" element={<OrgSignUp/>}/>
-        <Route path="/service" element={<PrivateRoute Component={YourBookings}/>}/>
+        <Route path="/service" element={<PrivateRoute Component={DisplayServices}/>}/>
         <Route path="/dashboardu" element={<PrivateRoute Component={UserDashboard} />}/>
         <Route path="/yourbookings" element={<PrivateRoute Component={YourBookings}/>}/>
         <Route path="/dashboarda" element={<PrivateRoute Component={AdminDashboard}/>}/>

@@ -52,7 +52,7 @@ function DisplayBookings() {
                                 <td className="py-2 px-4 border-b">{booking.status}</td>
                                 <td className="py-2 px-4 border-b">${booking.total_price}</td>
                                 <td className="py-2 px-4 border-b">
-                                    {booking.status === 'Pending' || booking.status === 'Confirmed' && (
+                                    {(booking.status === 'Pending' || booking.status === 'Confirmed') && (
                                         <button
                                             className="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300 rounded-lg px-3 py-1 text-sm"
                                             onClick={() => handleCancelBooking(booking.booking_id)}

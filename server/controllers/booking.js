@@ -27,6 +27,23 @@ const bookingUser = async (req, res) => {
 
 const bookingBeauty = async (req, res) => {
     const { status, booking_id } = req.body;
+    console.log(req.body);
+    if(status && status === "Confirmed" && booking_id){
+        console.log("geure")
+        const query = 'UPDATE booking SET status = "Completed" WHERE booking_id = ? AND status = "confirmed"'
+        const values = [ booking_id];
+        db.query(query, values)
+
+            .then(() => {
+                res.send('Booking updated successfully');
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send('Error updating booking');
+            });
+        return;
+    }
+
     if (status && booking_id) {
         const query = 'UPDATE booking SET status = ? WHERE booking_id = ? AND status = "pending"';
         const values = [status, booking_id];

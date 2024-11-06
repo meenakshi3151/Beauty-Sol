@@ -2,17 +2,18 @@ const db = require('../db');
 const service = async (req, res) => {
     console.log(req.body);
     const { service_name, service_description, price, email,  in_home, on_spot, price_inhome } = req.body; 
-    if (service_name && service_description && price && email  && in_home && on_spot && price_inhome ) {
+    if (!service_name || !service_description || !price ||  !email  || !in_home || !on_spot || !price_inhome ) {
              return res.status(400).send('Please fill all the fields');
     }
         if(price < 0 || price_inhome < 0){
             return res.status(400).send('Price must be a positive number');
         }
-        
+        console.log('Adding service');
         const query = 'INSERT INTO service ( service_name, service_description, price, email, in_home, on_spot, price_inhome) VALUES (?, ?, ?, ?, ? ,? , ?)';
         const values = [service_name, service_description, price, email, in_home, on_spot, price_inhome];
         db.query(query, values)
             .then(() => {
+                console.log('Service added successfully');
                 res.send('Service added successfully');
             })
             .catch(err => {
