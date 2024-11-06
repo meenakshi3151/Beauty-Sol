@@ -6,6 +6,7 @@ import ParlourCard from "../components/ParlourCard";
 
 function UserDashboard() {
   const [parlours, setParlours] = useState([]);
+  const [filteredParlours, setFilteredParlours] = useState([]);
   const currUser = JSON.parse(localStorage.getItem("userinfoDetails"));
 
   useEffect(() => {
@@ -21,7 +22,6 @@ function UserDashboard() {
         userstreet: currUser.Street
       })
       .then((response) => {
-        console.log(response.data);
         setParlours(response.data);
       })
       .catch((error) => {
@@ -29,17 +29,16 @@ function UserDashboard() {
       });
     }
   }, [currUser?.State, currUser?.City, currUser?.Pincode, currUser?.Street]);
-  
 
-  console.log(parlours);
+  const displayParlours = filteredParlours.length > 0 ? filteredParlours : parlours;
 
   return (
     <>
       <Navbar />
-      <SearchBar />
+      <SearchBar parlours={parlours} setFilteredParlours={setFilteredParlours} />
       <div className="grid grid-cols-3 gap-4">
-        {parlours.length > 0 ? (
-          parlours.map((parlour) => (
+        {displayParlours.length > 0 ? (
+          displayParlours.map((parlour) => (
             <ParlourCard 
               key={parlour.id} 
               name={parlour.name} 
