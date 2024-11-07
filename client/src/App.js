@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import YourBookings from './pages/YourBookings';
 import AddService from './components/AddService';
 import PrivateRoute from './components/PrivateRoute';
+import Notification from './components/Notification';
 import YourService from './components/YourService';
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/dashboarda" element={<PrivateRoute Component={AdminDashboard}/>}/>
         <Route path="/addservice" element={<PrivateRoute Component={AddService}/>} />
         <Route path="/yourservice" element={<PrivateRoute Component={YourService}/>} />
+        <Route path="/notification" element={<PrivateRoute Component={Notification}/>} />
       </Routes>
   );
 }

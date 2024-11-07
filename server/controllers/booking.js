@@ -1,4 +1,5 @@
 const db = require('../db');
+const { sendNotificationUser } = require('../index');
 const bookingUser = async (req, res) => {
     const { user_email, service_id, total_price, service_type } = req.body;
     console.log(user_email);
@@ -14,10 +15,23 @@ const bookingUser = async (req, res) => {
         db.query(query, values)
             .then(() => {
                 res.send('Booking added successfully');
+                sendNotificationUser(user_email, 'Your booking has been added successfully and is pending confirmation with #${service_type} and #${total_price}');
+                const query = 'SELECT email FROM service WHERE service_id = ?';
+                const values = [service_id];
+                db.query(query, values)
+                    .then(rows => {
+                        const email = rows[0].email;
+                        sendNotificationUser(email, 'You have a new booking request from #${user_email} with #${service_type} and #${total_price}');
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).send('server error');
+                    });
             })
             .catch(err => {
                 console.error(err);
                 res.status(500).send('Error adding booking');
+                sendNotificationUser(user_email, 'Error adding booking with #${service_type}');
             });
     }
     else {
@@ -33,13 +47,27 @@ const bookingBeauty = async (req, res) => {
         const query = 'UPDATE booking SET status = "Completed" WHERE booking_id = ? AND status = "confirmed"'
         const values = [ booking_id];
         db.query(query, values)
-
+            
             .then(() => {
                 res.send('Booking updated successfully');
+                const query = 'SELECT user_email FROM booking WHERE booking_id = ?';
+                const values = [booking_id];
+                db.query(query, values)
+                    .then(rows => {
+                        const user_email = rows[0].user_email;
+                        sendNotificationUser(user_email, 'Your booking has been completed successfully');
+                        res.send('Booking updated successfully');
+                    }
+                    )
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).send('server error');
+                    });
             })
             .catch(err => {
                 console.error(err);
                 res.status(500).send('Error updating booking');
+                
             });
         return;
     }
@@ -90,11 +118,35 @@ const cancelBooking = async (req, res) => {
         const values = [booking_id];
         db.query(query, values)
             .then(() => {
-                res.send('Booking cancelled successfully');
+                const query = 'SELECT user_email FROM booking WHERE booking_id = ?';
+                const values = [booking_id];
+                db.query(query, values)
+                    .then(rows => {
+                        const user_email = rows[0].user_email;
+                        res.send('Booking cancelled successfully');
+                        sendNotificationUser(user_email, 'Your booking has been cancelled successfully');
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).send('server error');
+                    });
             })
             .catch(err => {
                 console.error(err);
                 res.status(500).send('Error cancelling booking');
+                const query = 'SELECT user_email FROM booking WHERE booking_id = ?';
+                const values = [booking_id];
+                db.query(query, values)
+                    .then(rows => {
+                        const user_email = rows[0].user_email;
+                        sendNotificationUser(user_email, 'Error cancelling booking');
+                        res.status(500).send('Error cancelling booking');
+                    }
+                    )
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).send('server error');
+                    });
             });
     }
     else {

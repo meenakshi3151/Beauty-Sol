@@ -1,10 +1,10 @@
 import React from "react";
 import { useAuth } from "./AuthContext";
 function NavbarAdmin() {
-    const { logout }=useAuth();
+    const { logout } = useAuth();
     const handleLogout = () => {
         localStorage.removeItem("orginfodetails");
-       logout();
+        logout();
         window.location.href = "/";
     };
     return (
@@ -30,6 +30,9 @@ function NavbarAdmin() {
                             <li>
                                 <a href="/addservice" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Add service</a>
                             </li>
+                            <l1>
+                                <a href="/notification" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Notifications</a>
+                            </l1>
                             <li>
                                 <button type="submit" onClick={handleLogout} class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</button>
                             </li>
