@@ -1,4 +1,4 @@
-# Beauty-Sol 💅  
+# Beauty-Sol 
 A full-stack beauty salon booking platform enabling seamless service browsing, booking, and approvals.
 
 ## Features
