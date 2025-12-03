@@ -16,11 +16,9 @@ A full-stack beauty salon booking platform enabling seamless service browsing, b
 - Developed a **booking system** enabling users to create, update, and delete appointments for home or onsite services.  
 
 ## Tech Stack
-- **Frontend:** React, React Router, Web Vitals  
+- **Frontend:** React  
 - **Backend:** Node.js, Express, CORS  
-- **Database:** MongoDB Atlas  
-- **Hosting / Infra:** GCP (self-service platform description), Cloud features  
-- **Other:** Automated workflows, load testing, CI/CD ready  
+- **Database:** SQL 
 
 ## How to Run
 
